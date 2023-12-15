@@ -1,0 +1,45 @@
+@layer utilities {
+  .bg_gainsboro {
+    background-color: gainsboro
+    }
+
+  .rounded_9999px {
+    border-radius: 9999px
+    }
+
+  .p_4 {
+    padding: var(--spacing-4)
+    }
+
+  .fs_24px {
+    font-size: 24px
+    }
+
+  .text_secondary {
+    color: var(--colors-secondary)
+    }
+
+  .text_primary {
+    color: var(--colors-primary)
+    }
+
+  .group:is(:hover, [data-hover]) .groupHover\:bg_red {
+    background: red
+        }
+
+  .group:is(:hover, [data-hover]) .groupHover\:h_10px {
+    height: 10px
+        }
+
+  @layer compositions {
+    .textStyle_body {
+      font-family: Inter;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      text-decoration: None;
+      text-transform: None
+        }
+    }
+}
