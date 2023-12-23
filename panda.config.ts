@@ -43,6 +43,9 @@ export default defineConfig({
       //     }
       //   }
       // },
+      breakpoints: {
+        gg: "1440px",
+      },
 
       tokens: {
         colors: {

@@ -198,10 +198,16 @@ export interface Conditions {
 	"lgDown": string
 	/** `@media screen and (min-width: 80em)` */
 	"xl": string
-	/** `@media screen and (min-width: 80em) and (max-width: 95.9975em)` */
+	/** `@media screen and (min-width: 80em) and (max-width: 89.9975em)` */
 	"xlOnly": string
 	/** `@media screen and (max-width: 79.9975em)` */
 	"xlDown": string
+	/** `@media screen and (min-width: 90em)` */
+	"gg": string
+	/** `@media screen and (min-width: 90em) and (max-width: 95.9975em)` */
+	"ggOnly": string
+	/** `@media screen and (max-width: 89.9975em)` */
+	"ggDown": string
 	/** `@media screen and (min-width: 96em)` */
 	"2xl": string
 	/** `@media screen and (min-width: 96em)` */
@@ -214,20 +220,30 @@ export interface Conditions {
 	"smToLg": string
 	/** `@media screen and (min-width: 40em) and (max-width: 79.9975em)` */
 	"smToXl": string
+	/** `@media screen and (min-width: 40em) and (max-width: 89.9975em)` */
+	"smToGg": string
 	/** `@media screen and (min-width: 40em) and (max-width: 95.9975em)` */
 	"smTo2xl": string
 	/** `@media screen and (min-width: 48em) and (max-width: 63.9975em)` */
 	"mdToLg": string
 	/** `@media screen and (min-width: 48em) and (max-width: 79.9975em)` */
 	"mdToXl": string
+	/** `@media screen and (min-width: 48em) and (max-width: 89.9975em)` */
+	"mdToGg": string
 	/** `@media screen and (min-width: 48em) and (max-width: 95.9975em)` */
 	"mdTo2xl": string
 	/** `@media screen and (min-width: 64em) and (max-width: 79.9975em)` */
 	"lgToXl": string
+	/** `@media screen and (min-width: 64em) and (max-width: 89.9975em)` */
+	"lgToGg": string
 	/** `@media screen and (min-width: 64em) and (max-width: 95.9975em)` */
 	"lgTo2xl": string
+	/** `@media screen and (min-width: 80em) and (max-width: 89.9975em)` */
+	"xlToGg": string
 	/** `@media screen and (min-width: 80em) and (max-width: 95.9975em)` */
 	"xlTo2xl": string
+	/** `@media screen and (min-width: 90em) and (max-width: 95.9975em)` */
+	"ggTo2xl": string
 	/** The base (=no conditions) styles to apply  */
 	"base": string
 }

@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
+      "#comps/*": ["./app/comps/*"],
       "#ss/*": ["./styled-system/*"]
     },
 
