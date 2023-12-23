@@ -1,4 +1,4 @@
-import { css } from "#ss/css";
+import { css, cva } from "#ss/css";
 import {
   Button,
   ComboBox,
@@ -10,39 +10,31 @@ import {
   type ComboBoxProps,
 } from "react-aria-components";
 
-let options = [
-  { id: 1, name: "Aerospace" },
-  { id: 2, name: "Mechanical" },
-  { id: 3, name: "Civil" },
-  { id: 4, name: "Biomedical" },
-  { id: 5, name: "Nuclear" },
-  { id: 6, name: "Industrial" },
-  { id: 7, name: "Chemical" },
-  { id: 8, name: "Agricultural" },
-  { id: 9, name: "Electrical" },
-];
+type Option = { id: any; name: string };
 
-type Option = (typeof options)[number];
+type Props = { options: Option[] } & ComboBoxProps<Option>;
 
-type Props = {} & ComboBoxProps<Option>;
-
-export default function BaseCombobox({ ...rest }: Props) {
+export default function BaseCombobox({ options, ...rest }: Props) {
   return (
-    <ComboBox<Option> {...rest}>
+    <ComboBox<Option> {...rest} menuTrigger="focus">
       <Label>Favorite Animal</Label>
       <div>
         <Input className={`${inputCss}`} />
-        <Button>▼</Button>
+        {/* <Button className="px_2">▼</Button> */}
       </div>
       <Popover>
-        <ListBox>
-          {/* {(item) => <ListBoxItem key={item.id}>{item.name}</ListBoxItem>} */}
-          <ListBoxItem>Aardvark</ListBoxItem>
-          <ListBoxItem>Cat</ListBoxItem>
-          <ListBoxItem>Dog</ListBoxItem>
-          <ListBoxItem>Kangaroo</ListBoxItem>
-          <ListBoxItem>Panda</ListBoxItem>
-          <ListBoxItem>Snake</ListBoxItem>
+        <ListBox className={listboxCss}>
+          {options.map((item, idx) => (
+            <ListBoxItem
+              key={idx}
+              id={item.id}
+              className={({ isSelected, isFocusVisible }) =>
+                `${listboxItemCss({ isSelected, isFocused: isFocusVisible })}`
+              }
+            >
+              {item.name}
+            </ListBoxItem>
+          ))}
         </ListBox>
       </Popover>
     </ComboBox>
@@ -53,4 +45,39 @@ const inputCss = css({
   border: "blueviolet 1px solid",
   px: "4",
   py: "2",
+});
+
+const listboxCss = css({
+  border: "blue 1px solid",
+  borderRadius: "4px",
+  display: "grid",
+  gap: "2",
+  width: "var(--trigger-width)",
+  px: 2,
+  py: 2,
+});
+
+const listboxItemCss = cva({
+  base: {
+    px: 2,
+    py: 2,
+    cursor: "pointer",
+    "&:hover, &:focus-visible": {
+      bg: "#00CED1A0",
+    },
+  },
+  variants: {
+    isFocused: {
+      true: {
+        border: "blue 1px solid",
+        bg: "#00CED1A0",
+      },
+    },
+    isSelected: {
+      true: {
+        fontWeight: "bold",
+        color: "blue",
+      },
+    },
+  },
 });
