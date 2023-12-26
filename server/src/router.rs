@@ -16,6 +16,7 @@ pub fn init_router() -> Router {
         .route("/greet/:name", get(greet_path))
         .merge(ping())
         .nest("/nest", nest())
+    // .route("/*", get(|| async { "404" }))
 }
 
 fn api() -> Router {
@@ -27,6 +28,7 @@ fn api() -> Router {
 fn ping() -> Router {
     Router::new().route("/ping", get(|| async { "pingg" }))
 }
+
 fn nest() -> Router {
     Router::new()
         .route("/a", get(|| async { "a" }))
