@@ -1,15 +1,13 @@
-"use client";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { css } from "#ss/css";
 
-const inter = Inter({ subsets: ["latin"] });
-
+export const dynamic = "force-dynamic";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  console.log("GET");
   return (
     <html lang="en">
-      <body className={`${inter.className} ${bodyCss}`}>
+      <body className={`${bodyCss}`}>
         <header className={`${headerCss} full-fledge`}>This is A header</header>
         <aside className={sidebarCss} id="sidebar">
           <section>Section 1</section>

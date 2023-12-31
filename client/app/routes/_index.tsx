@@ -1,5 +1,5 @@
 import { css } from "#ss/css";
-import BaseCombobox from "~/comps/combobox";
+import BaseCombobox from "#comps/combobox";
 
 export default function Page() {
   return (

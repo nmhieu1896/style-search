@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "styled-system"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "styled-system", "server.mjs"],
 
   "exclude": ["./styled-system/*"],
   "compilerOptions": {
@@ -13,9 +13,10 @@
     "strict": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"],
+      "#/*": ["./app/*"],
       "#comps/*": ["./app/comps/*"],
       "#ss/*": ["./styled-system/*"]
     },
