@@ -1,4 +1,4 @@
-import { getSlotRecipes, splitProps } from '../helpers.js';
+import { getSlotRecipes, memo, splitProps } from '../helpers.js';
 import { cva } from './cva.js';
 
 export function sva(config) {
@@ -25,7 +25,7 @@ export function sva(config) {
     Object.entries(variants).map(([key, value]) => [key, Object.keys(value)])
   );
 
-  return Object.assign(svaFn, {
+  return Object.assign(memo(svaFn), {
     __cva__: false,
     raw,
     variantMap,

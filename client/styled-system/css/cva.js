@@ -1,4 +1,4 @@
-import { compact, mergeProps, splitProps, uniq } from '../helpers.js';
+import { compact, mergeProps, memo, splitProps, uniq } from '../helpers.js';
 import { css, mergeCss } from './css.js';
 
 const defaults = (conf) => ({
@@ -49,7 +49,7 @@ export function cva(config) {
 
   const variantMap = Object.fromEntries(Object.entries(variants).map(([key, value]) => [key, Object.keys(value)]))
 
-  return Object.assign(cvaFn, {
+  return Object.assign(memo(cvaFn), {
     __cva__: true,
     variantMap,
     variantKeys,
