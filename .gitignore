@@ -6,3 +6,4 @@ client/public/build/
 .env
 
 server/target
+.nx/cache

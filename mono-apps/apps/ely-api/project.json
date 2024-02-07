@@ -1,0 +1,83 @@
+{
+  "name": "ely-api",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "ely-api/src",
+  "projectType": "application",
+  "targets": {
+    "i": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun install",
+        "cwd": "./apps/ely-api"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun build.ts",
+        "cwd": "./apps/ely-api"
+      },
+      "dependsOn": ["install"]
+    },
+    "containerize": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -f apps/ely-api/Dockerfile -t $PROJECT_NAME:api-$BRANCH .",
+        "cwd": "./"
+      },
+      "dependsOn": ["build"]
+    },
+    "push-to-ecr": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "if [ $BRANCH != 'dev' ]; then aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $ECR_STAGING && docker tag $PROJECT_NAME:api-$BRANCH $ECR_STAGING/$PROJECT_NAME:api-$BRANCH && docker push $ECR_STAGING/$PROJECT_NAME:api-$BRANCH; fi",
+        "cwd": "./"
+      },
+      "dependsOn": ["containerize"]
+    },
+    "ci": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo $PROJECT_NAME:api-$BRANCH",
+        "cwd": "./"
+      },
+      "dependsOn": ["push-to-ecr"]
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun --watch ./src/index.ts",
+        "cwd": "./apps/ely-api"
+      }
+    },
+    "db-generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun drizzle-kit generate:pg --config=src/config/drizzle.config.ts",
+        "cwd": "./apps/ely-api"
+      }
+    },
+    "db-migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun run src/migrator.ts",
+        "cwd": "./apps/ely-api"
+      }
+    },
+    "db-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun drizzle-kit check:pg --config=src/config/drizzle.config.ts",
+        "cwd": "./apps/ely-api"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun --watch test",
+        "cwd": "./apps/ely-api"
+      }
+    }
+  },
+  "tags": []
+}
