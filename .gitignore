@@ -7,3 +7,5 @@ client/public/build/
 
 server/target
 .nx/cache
+
+logs-file
