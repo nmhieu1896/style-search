@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia';
-import { logsPlugin } from './services/logs/logs.service';
+import { logsPlugin } from './services/logs/logs.route';
 
 const app = new Elysia()
   .get('/', (arg) => {
