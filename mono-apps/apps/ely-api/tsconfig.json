@@ -112,6 +112,10 @@
 
     /* Linting */
 
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "#services/*": ["./src/services/*"]
+    }
   }
 }

@@ -6,10 +6,10 @@ const { combine, timestamp, label, printf } = winston.format;
 
 const myFormat = printf(
   ({ level, message, label, timestamp }) =>
-    `${timestamp} [${label}] ${level}: ${JSON.stringify(message)}`
+    `${timestamp} | ${level}: ${JSON.stringify(message)}`
 );
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: 'info',
   format: combine(label({ label: 'What tf is label?' }), timestamp(), myFormat),
 
