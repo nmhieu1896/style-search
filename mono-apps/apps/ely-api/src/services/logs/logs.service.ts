@@ -23,7 +23,22 @@ export const logger = winston.createLogger({
   ],
 });
 
+export const loggerCtx = (arg: Context & { traceId?: string }) => {
+  return {
+    info(args: any) {
+      logger.info({ ...args, traceId: arg.traceId });
+    },
+    error(args: any) {
+      logger.error({ ...args, traceId: arg.traceId });
+    },
+    warn(args: any) {
+      logger.warn({ ...args, traceId: arg.traceId });
+    },
+  };
+};
+
 export const baseLog = async (arg: Context) => {
+  //@ts-ignore
   arg.store.a = (arg.store.a || 0) + 1;
   return 'ok';
 };
