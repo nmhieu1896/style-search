@@ -1,4 +1,5 @@
 import { Title } from "@solidjs/meta";
+import { Suspense } from "solid-js";
 import Counter from "~/components/Counter";
 
 export default function Home() {
@@ -6,8 +7,11 @@ export default function Home() {
     <main>
       <Title>Hello World</Title>
       <h1>Hello world!</h1>
-      <Counter />
-      <Counter />
+
+      <Counter transition={true} />
+      <br />
+      <Counter transition={false} />
+
       <p>
         Visit{" "}
         <a href="https://start.solidjs.com" target="_blank">

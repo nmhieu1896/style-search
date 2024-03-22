@@ -16,7 +16,7 @@
   border-radius: 2em;
   border: 2px solid rgba(68, 107, 158, 0);
   outline: none;
-  width: max-content;
+  width: 250px;
   font-variant-numeric: tabular-nums;
   margin-inline: auto;
   cursor: pointer;

@@ -2,16 +2,16 @@ import {
   Accessor,
   Resource,
   Setter,
+  Suspense,
   createEffect,
   createResource,
   createSignal,
   onCleanup,
   onMount,
+  useTransition,
 } from "solid-js";
 import "./Counter.css";
 import ky from "ky";
-import { Link } from "@solidjs/meta";
-import { A } from "@solidjs/router";
 
 type TODO = { completed: boolean; title: string; id: number };
 type SignalTodo = Partial<Omit<TODO, "completed">> & { completed: Accessor<boolean> };
@@ -21,21 +21,24 @@ const fetchTodoItem = async (id: number) =>
 
 class DataFetch {
   id: Accessor<number>;
-  setId: Setter<number>;
+  // setId: Setter<number>;
+  setId: any;
   setCompleted: Setter<boolean>;
   data: Accessor<SignalTodo>;
 
-  constructor(initId: number) {
+  constructor(initId: number, transition = true) {
     let [id, setId] = createSignal(initId);
     //Similar to tanstack useQuery
     const [data] = createResource(id, fetchTodoItem);
-    console.log("loading: ", data.loading);
+    const [isPending, start] = useTransition();
     const [completed, setCompleted] = createSignal(data()?.completed || false);
     this.id = id;
-    this.setId = setId;
+    this.setId = transition ? (id: number) => start(() => setId(id)) : setId;
     this.setCompleted = setCompleted;
-    //Replace completed:boolean by completed:Accessor<boolean>
+    // Replace completed:boolean by completed:Accessor<boolean>
+    // Signal can be used as a field of an object
     this.data = () => ({ ...data(), completed });
+
     //update completed signal when data changes
     createEffect(() => {
       if (data()) setCompleted(data()?.completed || false);
@@ -53,31 +56,38 @@ class DataFetch {
   }
 }
 
-export default function Counter() {
-  let instance = new DataFetch(1);
-  console.log("INIT COUNTER");
-
-  createEffect(() => {
-    console.log("fetched Id: ", instance.data());
-  });
+export default function Counter(props: { transition?: boolean }) {
+  let instance = new DataFetch(1, props.transition);
 
   return (
     <div class="counter-wrapper">
       <button type="button" class="increment" onClick={() => instance.setId(instance.id() + 1)}>
-        Clicks: {instance.id()}
+        Clicks {props.transition ? "with transition" : ""}: {instance.id()}
       </button>
-      <button class="increment" onClick={() => instance.toggleComplete()}>
-        <span>taskId: {instance.data().id}</span>
-        <span>taskTitle: {instance.data().title?.slice(0, 10)}</span>
-        <span
-          classList={{
-            "text-green": instance.data().completed(),
-            "text-red": !instance.data().completed(),
-          }}
-        >
-          {instance.data().completed() ? "completed" : "not completed"}
-        </span>
-      </button>
+      <Suspense fallback={<LoadingButton />}>
+        <button class="increment" onClick={() => instance.toggleComplete()}>
+          <span>taskId: {instance.data().id}</span>
+          <span>taskTitle: {instance.data().title?.slice(0, 10)}</span>
+          <span
+            classList={{
+              "text-green": instance.data().completed(),
+              "text-red": !instance.data().completed(),
+            }}
+          >
+            {instance.data().completed() ? "completed" : "not completed"}
+          </span>
+        </button>
+      </Suspense>
     </div>
   );
 }
+
+const LoadingButton = () => {
+  return (
+    <button class="increment">
+      <span>taskId: ...</span>
+      <span>taskTitle: ...</span>
+      <span>waiting</span>
+    </button>
+  );
+};
