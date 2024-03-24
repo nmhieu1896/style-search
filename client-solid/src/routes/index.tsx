@@ -7,10 +7,11 @@ export default function Home() {
     <main>
       <Title>Hello World</Title>
       <h1>Hello world!</h1>
-
-      <Counter transition={true} />
-      <br />
-      <Counter transition={false} />
+      <Suspense>
+        <Counter transition={true} />
+        <br />
+        <Counter transition={false} />
+      </Suspense>
 
       <p>
         Visit{" "}

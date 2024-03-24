@@ -1,0 +1,15 @@
+[package]
+name = "client-leptos"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+leptos = { version = "0.6.8", features = ["csr"] }
+leptos_meta = { version = "0.6.8", features = ["csr"] }
+leptos_router = { version = "0.6.8", features = ["csr"] }
+console_log = "1.0.0"
+console_error_panic_hook = "0.1.7"
+actix-files = { version = "0.6", optional = true }
+log = "0.4.21"

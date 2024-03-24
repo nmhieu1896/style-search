@@ -8,6 +8,7 @@ import {
   createSignal,
   onCleanup,
   onMount,
+  startTransition,
   useTransition,
 } from "solid-js";
 import "./Counter.css";
@@ -30,10 +31,10 @@ class DataFetch {
     let [id, setId] = createSignal(initId);
     //Similar to tanstack useQuery
     const [data] = createResource(id, fetchTodoItem);
-    const [isPending, start] = useTransition();
     const [completed, setCompleted] = createSignal(data()?.completed || false);
+
     this.id = id;
-    this.setId = transition ? (id: number) => start(() => setId(id)) : setId;
+    this.setId = transition ? (id: number) => startTransition(() => setId(id)) : setId;
     this.setCompleted = setCompleted;
     // Replace completed:boolean by completed:Accessor<boolean>
     // Signal can be used as a field of an object

@@ -4,7 +4,8 @@ client/.cache/
 client/build/
 client/public/build/
 .env
-
+*/dist/*
+*/target/*
 server/target
 .nx/cache
 
